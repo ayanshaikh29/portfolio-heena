@@ -45,7 +45,7 @@
             position: fixed;
             pointer-events: none;
             z-index: 9999;
-            transition: transform 0.1s ease;
+            transition: transform 0.15s ease;
             mix-blend-mode: difference;
             opacity: 0;
         }
@@ -65,6 +65,27 @@
             height: 100%;
             z-index: -1;
             background: radial-gradient(circle at center, #3d2b1f 0%, #1a110a 100%);
+            overflow: hidden;
+        }
+
+        /* 3D Particles - Lightweight for mobile */
+        .particle {
+            position: absolute;
+            background: rgba(212, 163, 115, 0.3);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        /* Mobile 3D effect */
+        .mobile-3d-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(ellipse at top, #4a3524 0%, #1a110a 100%);
+            display: none;
         }
 
         /* --- Mobile Menu Toggle --- */
@@ -207,6 +228,7 @@
             min-width: 300px;
             display: flex; 
             justify-content: center; 
+            align-items: center;
             position: relative;
             z-index: 2;
         }
@@ -220,6 +242,7 @@
             overflow: hidden;
             box-shadow: 20px 20px 50px rgba(0,0,0,0.5);
             border: 1px solid var(--glass-border);
+            transition: transform 0.5s ease;
         }
 
         .img-wrapper img {
@@ -231,6 +254,17 @@
 
         .img-wrapper:hover img {
             transform: scale(1.05);
+        }
+
+        /* 3D Image effect for desktop */
+        @media (min-width: 769px) {
+            .img-wrapper {
+                transform: perspective(1000px) rotateY(-15deg);
+            }
+            
+            .img-wrapper:hover {
+                transform: perspective(1000px) rotateY(-10deg) scale(1.02);
+            }
         }
 
         /* --- Reels Showcase --- */
@@ -289,6 +323,23 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: 0.5s;
+        }
+
+        .skill-card:hover::before {
+            left: 100%;
         }
 
         .skill-card:hover {
@@ -302,11 +353,15 @@
             margin-bottom: 15px; 
             color: var(--secondary);
             font-size: 1.5rem;
+            position: relative;
+            z-index: 1;
         }
 
         .skill-card p {
             color: var(--text-light);
             line-height: 1.7;
+            position: relative;
+            z-index: 1;
         }
 
         /* --- Buttons --- */
@@ -322,6 +377,25 @@
             border: 1px solid var(--secondary);
             text-align: center;
             cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: 0.5s;
+            z-index: -1;
+        }
+
+        .btn:hover::before {
+            left: 100%;
         }
 
         .btn:hover {
@@ -357,6 +431,24 @@
             background: rgba(0,0,0,0.2);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(212,163,115,0.1) 0%, transparent 70%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
         }
 
         .contact-title {
@@ -367,6 +459,8 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            position: relative;
+            z-index: 1;
         }
 
         .contact-email {
@@ -374,6 +468,8 @@
             color: var(--secondary); 
             margin-bottom: 40px;
             display: block;
+            position: relative;
+            z-index: 1;
         }
 
         /* --- Footer --- */
@@ -382,6 +478,8 @@
             padding: 40px 20px;
             background: rgba(0, 0, 0, 0.3);
             border-top: 1px solid var(--glass-border);
+            position: relative;
+            z-index: 2;
         }
 
         .social-icons {
@@ -395,11 +493,20 @@
             color: var(--light);
             font-size: 1.5rem;
             transition: all 0.3s ease;
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.05);
         }
 
         .social-icons a:hover {
             color: var(--secondary);
             transform: translateY(-5px);
+            background: rgba(212,163,115,0.1);
         }
 
         .copyright {
@@ -457,6 +564,10 @@
             .img-wrapper {
                 max-width: 320px;
                 height: 420px;
+            }
+            
+            .contact-title {
+                font-size: 2.8rem;
             }
         }
 
@@ -551,6 +662,16 @@
             .contact-email {
                 font-size: 1.2rem;
             }
+            
+            /* Show mobile 3D background */
+            .mobile-3d-bg {
+                display: block;
+            }
+            
+            /* Hide desktop 3D canvas on mobile */
+            #canvas-container canvas {
+                display: none;
+            }
         }
 
         /* Mobile Portrait (up to 576px) */
@@ -600,6 +721,10 @@
                 padding: 12px 30px;
                 font-size: 0.9rem;
             }
+            
+            .hero-text p {
+                font-size: 1rem;
+            }
         }
 
         /* Very Small Mobile (up to 375px) */
@@ -619,17 +744,9 @@
             .reel-item {
                 min-height: 450px;
             }
-        }
-
-        /* Desktop-specific optimizations */
-        @media (min-width: 769px) {
-            .img-wrapper {
-                transform: perspective(1000px) rotateY(-10deg);
-                transition: transform 0.5s ease;
-            }
             
-            .img-wrapper:hover {
-                transform: perspective(1000px) rotateY(-5deg) scale(1.02);
+            .contact-title {
+                font-size: 1.8rem;
             }
         }
 
@@ -645,6 +762,21 @@
             #cursor {
                 display: none;
             }
+            
+            .skill-card::before,
+            .btn::before,
+            .contact-section::before {
+                display: none;
+            }
+        }
+
+        /* Performance optimizations */
+        @media (max-width: 768px) {
+            .skill-card,
+            .reel-item,
+            .btn {
+                transform: none !important;
+            }
         }
     </style>
 </head>
@@ -652,6 +784,7 @@
 
     <div id="cursor"></div>
     <div id="canvas-container"></div>
+    <div class="mobile-3d-bg" id="mobile3dBg"></div>
 
     <header>
         <a href="#" class="logo">Heena Inamdar</a>
@@ -746,11 +879,11 @@
     <section id="contact">
         <div class="contact-section" data-aos="zoom-out">
             <h2 class="contact-title">Get In Touch</h2>
-            <p style="margin-bottom: 30px; max-width: 600px; margin-left: auto; margin-right: auto; color: var(--text-light);">
+            <p style="margin-bottom: 30px; max-width: 600px; margin-left: auto; margin-right: auto; color: var(--text-light); position: relative; z-index: 1;">
                 Ready to transform your brand with compelling visuals and content? Let's create something amazing together.
             </p>
             
-            <div style="margin-bottom: 40px;">
+            <div style="margin-bottom: 40px; position: relative; z-index: 1;">
                 <p style="margin-bottom: 10px; color: var(--text-light);">
                     <i class="fas fa-map-marker-alt"></i> Jath, Maharashtra, India
                 </p>
@@ -762,7 +895,7 @@
                 </a>
             </div>
             
-            <div class="btn-group">
+            <div class="btn-group" style="position: relative; z-index: 1;">
                 <a href="https://www.instagram.com/heenainamdar754" target="_blank" class="btn">
                     <i class="fab fa-instagram"></i> Instagram
                 </a>
@@ -781,6 +914,9 @@
             <a href="mailto:heenainamdar066@gmail.com" aria-label="Email">
                 <i class="fas fa-envelope"></i>
             </a>
+            <a href="tel:+917498621020" aria-label="Phone">
+                <i class="fas fa-phone"></i>
+            </a>
         </div>
         <p class="copyright">© 2023 Heenakousar Inamdar. All rights reserved.</p>
     </footer>
@@ -789,7 +925,6 @@
         <i class="fas fa-arrow-up"></i>
     </a>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script async src="//www.instagram.com/embed.js"></script>
 
@@ -806,8 +941,8 @@
         const cursor = document.getElementById('cursor');
         if (window.innerWidth >= 768) {
             document.addEventListener('mousemove', (e) => {
-                cursor.style.left = e.clientX + 'px';
-                cursor.style.top = e.clientY + 'px';
+                cursor.style.left = e.clientX - 10 + 'px';
+                cursor.style.top = e.clientY - 10 + 'px';
             });
             
             // Cursor effects on interactive elements
@@ -850,62 +985,149 @@
             });
         });
 
-        // 3D Animated Background (Desktop only)
-        let scene, camera, renderer, torus;
-        
-        function initThreeJS() {
-            if (window.innerWidth < 768) return; // Only on desktop
+        // 3D Background Effects - Different for mobile and desktop
+        function init3DEffects() {
+            const canvasContainer = document.getElementById('canvas-container');
+            const mobile3dBg = document.getElementById('mobile3dBg');
             
-            scene = new THREE.Scene();
-            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-            renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            document.getElementById('canvas-container').appendChild(renderer.domElement);
+            // Desktop: Use Three.js for 3D effects
+            if (window.innerWidth >= 768) {
+                // Load Three.js only on desktop
+                const script = document.createElement('script');
+                script.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
+                script.onload = function() {
+                    // Initialize Three.js scene
+                    const scene = new THREE.Scene();
+                    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+                    const renderer = new THREE.WebGLRenderer({ 
+                        alpha: true, 
+                        antialias: true 
+                    });
+                    
+                    renderer.setSize(window.innerWidth, window.innerHeight);
+                    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); // Limit pixel ratio for performance
+                    canvasContainer.appendChild(renderer.domElement);
 
-            // Rotating Wireframe Torus
-            const geometry = new THREE.TorusGeometry(12, 3, 16, 100);
-            const material = new THREE.MeshBasicMaterial({ 
-                color: 0x7a5438, 
-                wireframe: true,
-                transparent: true,
-                opacity: 0.3
-            });
-            torus = new THREE.Mesh(geometry, material);
-            scene.add(torus);
+                    // Create floating particles instead of heavy torus
+                    const particlesGeometry = new THREE.BufferGeometry();
+                    const particlesCount = 500;
+                    const posArray = new Float32Array(particlesCount * 3);
+                    
+                    for(let i = 0; i < particlesCount * 3; i++) {
+                        posArray[i] = (Math.random() - 0.5) * 50;
+                    }
+                    
+                    particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+                    
+                    const particlesMaterial = new THREE.PointsMaterial({
+                        size: 0.05,
+                        color: 0xd4a373,
+                        transparent: true,
+                        opacity: 0.6
+                    });
+                    
+                    const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+                    scene.add(particlesMesh);
 
-            camera.position.z = 30;
+                    camera.position.z = 20;
 
-            // Add ambient light
-            const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-            scene.add(ambientLight);
+                    // Add subtle ambient light
+                    const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
+                    scene.add(ambientLight);
 
-            // Animation loop
-            function animate() {
-                requestAnimationFrame(animate);
-                if (torus) {
-                    torus.rotation.x += 0.003;
-                    torus.rotation.y += 0.003;
-                }
-                renderer.render(scene, camera);
+                    // Add point light for depth
+                    const pointLight = new THREE.PointLight(0xd4a373, 0.5);
+                    pointLight.position.set(10, 10, 10);
+                    scene.add(pointLight);
+
+                    // Mouse movement effect
+                    let mouseX = 0;
+                    let mouseY = 0;
+                    
+                    document.addEventListener('mousemove', (event) => {
+                        mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+                        mouseY = (event.clientY / window.innerHeight) * 2 - 1;
+                    });
+
+                    // Animation loop
+                    function animate() {
+                        requestAnimationFrame(animate);
+                        
+                        // Gentle rotation
+                        particlesMesh.rotation.x += 0.001;
+                        particlesMesh.rotation.y += 0.0015;
+                        
+                        // Subtle mouse interaction
+                        particlesMesh.rotation.y += mouseX * 0.0005;
+                        particlesMesh.rotation.x += mouseY * 0.0005;
+                        
+                        renderer.render(scene, camera);
+                    }
+                    animate();
+
+                    // Handle window resize
+                    window.addEventListener('resize', () => {
+                        camera.aspect = window.innerWidth / window.innerHeight;
+                        camera.updateProjectionMatrix();
+                        renderer.setSize(window.innerWidth, window.innerHeight);
+                    });
+                };
+                document.head.appendChild(script);
+            } 
+            // Mobile: Lightweight particle animation
+            else {
+                // Create floating particles for mobile
+                createMobileParticles();
+                
+                // Add CSS animation to mobile background
+                mobile3dBg.style.animation = 'pulse 15s ease-in-out infinite';
             }
-            animate();
         }
 
-        // Initialize 3D background
-        initThreeJS();
-
-        // Handle window resize
-        window.addEventListener('resize', () => {
-            // Update camera and renderer for Three.js
-            if (window.innerWidth >= 768 && camera && renderer) {
-                camera.aspect = window.innerWidth / window.innerHeight;
-                camera.updateProjectionMatrix();
-                renderer.setSize(window.innerWidth, window.innerHeight);
+        // Create lightweight particles for mobile
+        function createMobileParticles() {
+            const container = document.getElementById('mobile3dBg');
+            const particleCount = window.innerWidth < 400 ? 20 : 30;
+            
+            for(let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                // Random size
+                const size = Math.random() * 4 + 2;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                // Random position
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+                
+                // Random opacity
+                particle.style.opacity = Math.random() * 0.5 + 0.1;
+                
+                // Random animation
+                const duration = Math.random() * 20 + 10;
+                const delay = Math.random() * 5;
+                particle.style.animation = `float ${duration}s ease-in-out ${delay}s infinite`;
+                
+                container.appendChild(particle);
             }
             
-            // Reinitialize AOS on resize
-            AOS.refresh();
-        });
+            // Add CSS for floating animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes float {
+                    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+                    25% { transform: translate(${Math.random() * 20 - 10}px, ${Math.random() * 20 - 10}px) rotate(90deg); }
+                    50% { transform: translate(${Math.random() * 30 - 15}px, ${Math.random() * 30 - 15}px) rotate(180deg); }
+                    75% { transform: translate(${Math.random() * 20 - 10}px, ${Math.random() * 20 - 10}px) rotate(270deg); }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+
+        // Initialize 3D effects
+        init3DEffects();
 
         // Back to top button
         const backToTopBtn = document.getElementById('back-to-top');
@@ -926,6 +1148,42 @@
             });
         });
 
+        // Parallax effect on hero image (desktop only)
+        if (window.innerWidth >= 768) {
+            window.addEventListener('scroll', () => {
+                const scrolled = window.pageYOffset;
+                const heroImg = document.querySelector('.img-wrapper');
+                if (heroImg) {
+                    const rate = scrolled * -0.1;
+                    heroImg.style.transform = `perspective(1000px) rotateY(-15deg) translateY(${rate}px)`;
+                }
+            });
+        }
+
+        // Image hover effect for desktop
+        if (window.innerWidth >= 768) {
+            const imgWrapper = document.querySelector('.img-wrapper');
+            if (imgWrapper) {
+                imgWrapper.addEventListener('mousemove', (e) => {
+                    const rect = imgWrapper.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    
+                    const rotateY = ((x - centerX) / centerX) * 5;
+                    const rotateX = ((centerY - y) / centerY) * 5;
+                    
+                    imgWrapper.style.transform = `perspective(1000px) rotateY(${-15 + rotateY}deg) rotateX(${rotateX}deg)`;
+                });
+                
+                imgWrapper.addEventListener('mouseleave', () => {
+                    imgWrapper.style.transform = 'perspective(1000px) rotateY(-15deg) rotateX(0deg)';
+                });
+            }
+        }
+
         // Force Instagram embeds to reload
         window.onload = function() {
             if (window.instgrm) {
@@ -937,20 +1195,25 @@
                 if (window.instgrm) {
                     window.instgrm.Embeds.process();
                 }
-            }, 1000);
+            }, 1500);
         };
 
-        // Parallax effect on hero image (desktop only)
-        if (window.innerWidth >= 768) {
-            window.addEventListener('scroll', () => {
-                const scrolled = window.pageYOffset;
-                const heroImg = document.querySelector('.img-wrapper');
-                if (heroImg) {
-                    const rate = scrolled * -0.2;
-                    heroImg.style.transform = `perspective(1000px) rotateY(-10deg) translateY(${rate}px)`;
+        // Handle window resize
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                // Refresh AOS
+                AOS.refresh();
+                
+                // Recreate mobile particles if needed
+                if (window.innerWidth < 768) {
+                    const mobileBg = document.getElementById('mobile3dBg');
+                    mobileBg.innerHTML = '';
+                    createMobileParticles();
                 }
-            });
-        }
+            }, 250);
+        });
     </script>
 </body>
 </html>
