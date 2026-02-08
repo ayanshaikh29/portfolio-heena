@@ -50,20 +50,8 @@
             opacity: 0;
         }
 
-        #cursor-trail {
-            width: 40px;
-            height: 40px;
-            border: 2px solid var(--secondary);
-            border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            z-index: 9998;
-            transition: all 0.3s ease;
-            opacity: 0;
-        }
-
         @media (min-width: 769px) {
-            #cursor, #cursor-trail {
+            #cursor {
                 opacity: 1;
             }
         }
@@ -80,85 +68,12 @@
             overflow: hidden;
         }
 
-        /* Animated gradient background */
-        .animated-gradient {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -2;
-            background: linear-gradient(45deg, #1a110a, #3d2b1f, #2c1e14, #1a110a);
-            background-size: 400% 400%;
-            animation: gradientShift 15s ease infinite;
-        }
-
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* Floating geometric shapes */
-        .floating-shape {
-            position: fixed;
-            opacity: 0.1;
-            z-index: -1;
-            animation: float 20s ease-in-out infinite;
-        }
-
-        .floating-shape.shape1 {
-            top: 10%;
-            left: 10%;
-            width: 100px;
-            height: 100px;
-            background: linear-gradient(45deg, var(--secondary), transparent);
-            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
-            animation-delay: 0s;
-        }
-
-        .floating-shape.shape2 {
-            top: 60%;
-            right: 10%;
-            width: 150px;
-            height: 150px;
-            background: linear-gradient(135deg, var(--primary), transparent);
-            border-radius: 63% 37% 54% 46% / 55% 48% 52% 45%;
-            animation-delay: 3s;
-        }
-
-        .floating-shape.shape3 {
-            bottom: 20%;
-            left: 20%;
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(225deg, var(--secondary), transparent);
-            border-radius: 41% 59% 41% 59% / 41% 59% 41% 59%;
-            animation-delay: 6s;
-        }
-
-        @keyframes float {
-            0%, 100% { 
-                transform: translate(0, 0) rotate(0deg) scale(1);
-            }
-            25% { 
-                transform: translate(30px, -30px) rotate(90deg) scale(1.1);
-            }
-            50% { 
-                transform: translate(50px, 20px) rotate(180deg) scale(0.9);
-            }
-            75% { 
-                transform: translate(-20px, 40px) rotate(270deg) scale(1.05);
-            }
-        }
-
         /* 3D Particles - Lightweight for mobile */
         .particle {
             position: absolute;
-            background: radial-gradient(circle, rgba(212, 163, 115, 0.6), transparent);
+            background: rgba(212, 163, 115, 0.3);
             border-radius: 50%;
             pointer-events: none;
-            filter: blur(1px);
         }
 
         /* Mobile 3D effect */
@@ -224,23 +139,6 @@
             align-items: center;
             z-index: 1000;
             transition: all 0.3s ease;
-            animation: slideDown 0.8s ease;
-        }
-
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateX(-50%) translateY(-100px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(-50%) translateY(0);
-            }
-        }
-
-        header.scrolled {
-            background: rgba(44, 30, 20, 0.95);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
 
         .logo {
@@ -250,12 +148,6 @@
             text-decoration: none;
             letter-spacing: 1px;
             z-index: 1001;
-            transition: all 0.3s ease;
-        }
-
-        .logo:hover {
-            transform: scale(1.05);
-            text-shadow: 0 0 20px rgba(212, 163, 115, 0.5);
         }
 
         nav {
@@ -277,23 +169,6 @@
             transition: 0.3s;
             opacity: 0.8;
             font-weight: 500;
-            position: relative;
-        }
-
-        nav ul li a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 50%;
-            width: 0;
-            height: 2px;
-            background: var(--secondary);
-            transition: all 0.3s ease;
-            transform: translateX(-50%);
-        }
-
-        nav ul li a:hover::after {
-            width: 100%;
         }
 
         nav ul li a:hover { 
@@ -338,18 +213,6 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            animation: fadeInUp 1s ease;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
         }
 
         .hero-text p {
@@ -358,7 +221,6 @@
             max-width: 500px; 
             color: var(--text-light);
             line-height: 1.8;
-            animation: fadeInUp 1s ease 0.2s both;
         }
 
         .hero-image { 
@@ -381,39 +243,6 @@
             box-shadow: 20px 20px 50px rgba(0,0,0,0.5);
             border: 1px solid var(--glass-border);
             transition: transform 0.5s ease;
-            animation: zoomIn 1s ease 0.4s both;
-        }
-
-        @keyframes zoomIn {
-            from {
-                opacity: 0;
-                transform: scale(0.8);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        /* Animated border effect */
-        .img-wrapper::before {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            background: linear-gradient(45deg, var(--secondary), var(--primary), var(--secondary));
-            background-size: 400%;
-            border-radius: 20px;
-            z-index: -1;
-            animation: borderGlow 3s ease infinite;
-            opacity: 0.5;
-        }
-
-        @keyframes borderGlow {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
         }
 
         .img-wrapper img {
@@ -424,7 +253,7 @@
         }
 
         .img-wrapper:hover img {
-            transform: scale(1.1);
+            transform: scale(1.05);
         }
 
         /* 3D Image effect for desktop */
@@ -448,20 +277,6 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            position: relative;
-            display: inline-block;
-            width: 100%;
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 3px;
-            background: linear-gradient(to right, transparent, var(--secondary), transparent);
         }
 
         .reels-grid {
@@ -480,32 +295,11 @@
             min-height: 500px;
             transition: 0.5s;
             overflow: hidden;
-            position: relative;
-            animation: floatIn 0.8s ease both;
-        }
-
-        @keyframes floatIn {
-            from {
-                opacity: 0;
-                transform: translateY(30px) rotateX(20deg);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0) rotateX(0);
-            }
-        }
-
-        .reel-item:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-
-        .reel-item:nth-child(3) {
-            animation-delay: 0.4s;
         }
 
         .reel-item:hover { 
-            transform: translateY(-15px) rotateZ(2deg); 
-            box-shadow: 0 25px 50px rgba(212, 163, 115, 0.3);
+            transform: translateY(-10px); 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
         }
 
         /* --- Skills Grid --- */
@@ -514,7 +308,6 @@
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 30px;
             width: 100%;
-            perspective: 1000px;
         }
 
         .skill-card {
@@ -532,7 +325,6 @@
             justify-content: center;
             position: relative;
             overflow: hidden;
-            transform-style: preserve-3d;
         }
 
         .skill-card::before {
@@ -550,29 +342,10 @@
             left: 100%;
         }
 
-        .skill-card::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(212, 163, 115, 0.2), transparent);
-            transform: translate(-50%, -50%);
-            transition: all 0.6s ease;
-        }
-
-        .skill-card:hover::after {
-            width: 300px;
-            height: 300px;
-        }
-
         .skill-card:hover {
             background: rgba(255, 255, 255, 0.08);
             border-color: var(--secondary);
-            transform: translateY(-10px) rotateX(5deg) rotateY(5deg);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            transform: translateY(-10px);
         }
 
         .skill-card h3 { 
@@ -582,12 +355,6 @@
             font-size: 1.5rem;
             position: relative;
             z-index: 1;
-            transition: all 0.3s ease;
-        }
-
-        .skill-card:hover h3 {
-            transform: translateZ(20px);
-            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
 
         .skill-card p {
@@ -595,28 +362,6 @@
             line-height: 1.7;
             position: relative;
             z-index: 1;
-            transition: all 0.3s ease;
-        }
-
-        .skill-card:hover p {
-            transform: translateZ(10px);
-        }
-
-        /* Animated skill number */
-        .skill-card h3::before {
-            content: attr(data-number);
-            position: absolute;
-            top: -40px;
-            right: 20px;
-            font-size: 6rem;
-            opacity: 0.05;
-            font-family: 'Playfair Display', serif;
-            transition: all 0.5s ease;
-        }
-
-        .skill-card:hover h3::before {
-            opacity: 0.1;
-            transform: scale(1.2) rotate(5deg);
         }
 
         /* --- Buttons --- */
@@ -656,8 +401,7 @@
         .btn:hover {
             background: transparent;
             color: var(--secondary);
-            box-shadow: 0 0 30px rgba(212, 163, 115, 0.5);
-            transform: translateY(-3px);
+            box-shadow: 0 0 20px rgba(212, 163, 115, 0.3);
         }
 
         .btn-outline {
@@ -676,7 +420,6 @@
             justify-content: center;
             flex-wrap: wrap;
             margin-top: 30px;
-            animation: fadeInUp 1s ease 0.6s both;
         }
 
         /* --- Contact Section --- */
@@ -690,7 +433,6 @@
             -webkit-backdrop-filter: blur(10px);
             position: relative;
             overflow: hidden;
-            border: 1px solid var(--glass-border);
         }
 
         .contact-section::before {
@@ -700,19 +442,13 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle, rgba(212,163,115,0.15) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(212,163,115,0.1) 0%, transparent 70%);
             animation: pulse 8s ease-in-out infinite;
         }
 
         @keyframes pulse {
-            0%, 100% { 
-                transform: scale(1) rotate(0deg); 
-                opacity: 1;
-            }
-            50% { 
-                transform: scale(1.2) rotate(180deg);
-                opacity: 0.8;
-            }
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
         }
 
         .contact-title {
@@ -734,12 +470,6 @@
             display: block;
             position: relative;
             z-index: 1;
-            transition: all 0.3s ease;
-        }
-
-        .contact-email:hover {
-            transform: scale(1.05);
-            text-shadow: 0 0 20px rgba(212, 163, 115, 0.5);
         }
 
         /* --- Footer --- */
@@ -773,25 +503,10 @@
             background: rgba(255,255,255,0.05);
         }
 
-        .social-icons a::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: 50%;
-            background: linear-gradient(45deg, var(--secondary), var(--primary));
-            opacity: 0;
-            transition: all 0.3s ease;
-            z-index: -1;
-        }
-
-        .social-icons a:hover::before {
-            opacity: 1;
-            transform: scale(1.2);
-        }
-
         .social-icons a:hover {
-            color: #fff;
-            transform: translateY(-10px) rotate(360deg);
+            color: var(--secondary);
+            transform: translateY(-5px);
+            background: rgba(212,163,115,0.1);
         }
 
         .copyright {
@@ -825,29 +540,11 @@
         #back-to-top.visible {
             opacity: 1;
             visibility: visible;
-            animation: bounce 2s ease infinite;
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
         }
 
         #back-to-top:hover {
-            transform: translateY(-5px) scale(1.1);
-            box-shadow: 0 10px 30px rgba(212, 163, 115, 0.5);
-        }
-
-        /* Scroll progress bar */
-        #scroll-progress {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 0%;
-            height: 3px;
-            background: linear-gradient(to right, var(--secondary), var(--primary));
-            z-index: 10000;
-            transition: width 0.1s ease;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
         }
 
         /* ==============================================
@@ -971,13 +668,9 @@
                 display: block;
             }
             
-            /* Disable complex 3D transforms on mobile */
-            .skill-card:hover {
-                transform: translateY(-10px);
-            }
-            
-            .img-wrapper {
-                transform: none !important;
+            /* Hide desktop 3D canvas on mobile */
+            #canvas-container canvas {
+                display: none;
             }
         }
 
@@ -1066,7 +759,7 @@
                 scroll-behavior: auto !important;
             }
             
-            #cursor, #cursor-trail {
+            #cursor {
                 display: none;
             }
             
@@ -1077,63 +770,23 @@
             }
         }
 
-        /* Loading animation */
-        .loading-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--dark);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 10000;
-            transition: opacity 0.5s ease;
-        }
-
-        .loading-screen.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .loader {
-            width: 50px;
-            height: 50px;
-            border: 3px solid rgba(212, 163, 115, 0.3);
-            border-top-color: var(--secondary);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+        /* Performance optimizations */
+        @media (max-width: 768px) {
+            .skill-card,
+            .reel-item,
+            .btn {
+                transform: none !important;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Loading Screen -->
-    <div class="loading-screen" id="loadingScreen">
-        <div class="loader"></div>
-    </div>
-
-    <!-- Scroll Progress Bar -->
-    <div id="scroll-progress"></div>
-
-    <!-- Animated Gradient Background -->
-    <div class="animated-gradient"></div>
-
-    <!-- Floating Shapes -->
-    <div class="floating-shape shape1"></div>
-    <div class="floating-shape shape2"></div>
-    <div class="floating-shape shape3"></div>
 
     <div id="cursor"></div>
-    <div id="cursor-trail"></div>
     <div id="canvas-container"></div>
     <div class="mobile-3d-bg" id="mobile3dBg"></div>
 
-    <header id="header">
+    <header>
         <a href="#" class="logo">Heena Inamdar</a>
         
         <div class="menu-toggle" id="menuToggle">
@@ -1156,7 +809,7 @@
     <section class="hero" id="home">
         <div class="hero-content">
             <div class="hero-text" data-aos="fade-up">
-                <h1 id="hero-title">Content Alchemist</h1>
+                <h1 id="hero-title">Content <br>Alchemist</h1>
                 <p>
                     I'm <strong>Heenakousar Inamdar</strong> — blending visual architecture with soul-stirring content to create digital experiences that resonate. Based in Jath, Maharashtra.
                 </p>
@@ -1209,15 +862,15 @@
         
         <div class="skill-grid">
             <div class="skill-card" data-aos="fade-up">
-                <h3 data-number="01">01. Graphic Design</h3>
+                <h3>01. Graphic Design</h3>
                 <p>Premium social media branding and visual storytelling using Canva & Adobe Creative Suite. Creating designs that capture attention and communicate effectively.</p>
             </div>
             <div class="skill-card" data-aos="fade-up" data-aos-delay="100">
-                <h3 data-number="02">02. Content Creation</h3>
+                <h3>02. Content Creation</h3>
                 <p>Engaging reel strategies and script writing that captures and keeps attention. Video editing and social media content that tells your brand's story.</p>
             </div>
             <div class="skill-card" data-aos="fade-up" data-aos-delay="200">
-                <h3 data-number="03">03. Literature & Writing</h3>
+                <h3>03. Literature & Writing</h3>
                 <p>Deep Shayari and professional content writing in Hindi, Urdu, and English. Crafting words that evoke emotion and drive engagement.</p>
             </div>
         </div>
@@ -1276,13 +929,6 @@
     <script async src="//www.instagram.com/embed.js"></script>
 
     <script>
-        // Hide loading screen after page loads
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                document.getElementById('loadingScreen').classList.add('hidden');
-            }, 500);
-        });
-
         // Initialize AOS animations
         AOS.init({
             duration: 1000,
@@ -1291,69 +937,24 @@
             disable: window.innerWidth < 768 ? true : false
         });
 
-        // Scroll progress bar
-        window.addEventListener('scroll', () => {
-            const scrollProgress = document.getElementById('scroll-progress');
-            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            const progress = (scrollTop / scrollHeight) * 100;
-            scrollProgress.style.width = progress + '%';
-        });
-
-        // Header scroll effect
-        const header = document.getElementById('header');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 100) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
-        });
-
         // Custom cursor for desktop
         const cursor = document.getElementById('cursor');
-        const cursorTrail = document.getElementById('cursor-trail');
-        
         if (window.innerWidth >= 768) {
-            let mouseX = 0, mouseY = 0;
-            let cursorX = 0, cursorY = 0;
-            let trailX = 0, trailY = 0;
-            
             document.addEventListener('mousemove', (e) => {
-                mouseX = e.clientX;
-                mouseY = e.clientY;
+                cursor.style.left = e.clientX - 10 + 'px';
+                cursor.style.top = e.clientY - 10 + 'px';
             });
             
-            function animateCursor() {
-                // Smooth cursor follow
-                cursorX += (mouseX - cursorX) * 0.15;
-                cursorY += (mouseY - cursorY) * 0.15;
-                
-                trailX += (mouseX - trailX) * 0.08;
-                trailY += (mouseY - trailY) * 0.08;
-                
-                cursor.style.left = cursorX - 10 + 'px';
-                cursor.style.top = cursorY - 10 + 'px';
-                
-                cursorTrail.style.left = trailX - 20 + 'px';
-                cursorTrail.style.top = trailY - 20 + 'px';
-                
-                requestAnimationFrame(animateCursor);
-            }
-            animateCursor();
-            
             // Cursor effects on interactive elements
-            const interactiveElements = document.querySelectorAll('a, .btn, .skill-card, .img-wrapper, .reel-item');
+            const interactiveElements = document.querySelectorAll('a, .btn, .skill-card, .img-wrapper');
             interactiveElements.forEach(el => {
                 el.addEventListener('mouseenter', () => {
                     cursor.style.transform = 'scale(1.5)';
                     cursor.style.background = '#fff';
-                    cursorTrail.style.transform = 'scale(1.5)';
                 });
                 el.addEventListener('mouseleave', () => {
                     cursor.style.transform = 'scale(1)';
                     cursor.style.background = 'var(--secondary)';
-                    cursorTrail.style.transform = 'scale(1)';
                 });
             });
         }
@@ -1404,82 +1005,44 @@
                     });
                     
                     renderer.setSize(window.innerWidth, window.innerHeight);
-                    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+                    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); // Limit pixel ratio for performance
                     canvasContainer.appendChild(renderer.domElement);
 
-                    // Create particle system
+                    // Create floating particles instead of heavy torus
                     const particlesGeometry = new THREE.BufferGeometry();
-                    const particlesCount = 800;
+                    const particlesCount = 500;
                     const posArray = new Float32Array(particlesCount * 3);
-                    const velocities = new Float32Array(particlesCount * 3);
                     
-                    for(let i = 0; i < particlesCount * 3; i += 3) {
-                        posArray[i] = (Math.random() - 0.5) * 60;
-                        posArray[i + 1] = (Math.random() - 0.5) * 60;
-                        posArray[i + 2] = (Math.random() - 0.5) * 60;
-                        
-                        velocities[i] = (Math.random() - 0.5) * 0.02;
-                        velocities[i + 1] = (Math.random() - 0.5) * 0.02;
-                        velocities[i + 2] = (Math.random() - 0.5) * 0.02;
+                    for(let i = 0; i < particlesCount * 3; i++) {
+                        posArray[i] = (Math.random() - 0.5) * 50;
                     }
                     
                     particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
                     
                     const particlesMaterial = new THREE.PointsMaterial({
-                        size: 0.08,
+                        size: 0.05,
                         color: 0xd4a373,
                         transparent: true,
-                        opacity: 0.8,
-                        blending: THREE.AdditiveBlending
+                        opacity: 0.6
                     });
                     
                     const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
                     scene.add(particlesMesh);
 
-                    // Create geometric shapes
-                    const geometries = [
-                        new THREE.TorusGeometry(5, 1, 16, 100),
-                        new THREE.OctahedronGeometry(3),
-                        new THREE.IcosahedronGeometry(2.5)
-                    ];
-                    
-                    const shapes = [];
-                    geometries.forEach((geo, index) => {
-                        const material = new THREE.MeshPhongMaterial({
-                            color: 0xd4a373,
-                            transparent: true,
-                            opacity: 0.1,
-                            wireframe: true
-                        });
-                        const mesh = new THREE.Mesh(geo, material);
-                        mesh.position.set(
-                            (index - 1) * 15,
-                            Math.random() * 10 - 5,
-                            -20
-                        );
-                        scene.add(mesh);
-                        shapes.push(mesh);
-                    });
+                    camera.position.z = 20;
 
-                    camera.position.z = 25;
-
-                    // Lighting
-                    const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+                    // Add subtle ambient light
+                    const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
                     scene.add(ambientLight);
 
-                    const pointLight = new THREE.PointLight(0xd4a373, 1);
+                    // Add point light for depth
+                    const pointLight = new THREE.PointLight(0xd4a373, 0.5);
                     pointLight.position.set(10, 10, 10);
                     scene.add(pointLight);
-
-                    const pointLight2 = new THREE.PointLight(0x7a5438, 0.5);
-                    pointLight2.position.set(-10, -10, -10);
-                    scene.add(pointLight2);
 
                     // Mouse movement effect
                     let mouseX = 0;
                     let mouseY = 0;
-                    let targetX = 0;
-                    let targetY = 0;
                     
                     document.addEventListener('mousemove', (event) => {
                         mouseX = (event.clientX / window.innerWidth) * 2 - 1;
@@ -1490,38 +1053,13 @@
                     function animate() {
                         requestAnimationFrame(animate);
                         
-                        // Smooth camera movement
-                        targetX = mouseX * 0.5;
-                        targetY = mouseY * 0.5;
+                        // Gentle rotation
+                        particlesMesh.rotation.x += 0.001;
+                        particlesMesh.rotation.y += 0.0015;
                         
-                        camera.position.x += (targetX - camera.position.x) * 0.05;
-                        camera.position.y += (-targetY - camera.position.y) * 0.05;
-                        camera.lookAt(scene.position);
-                        
-                        // Animate particles
-                        const positions = particlesGeometry.attributes.position.array;
-                        for(let i = 0; i < positions.length; i += 3) {
-                            positions[i] += velocities[i];
-                            positions[i + 1] += velocities[i + 1];
-                            positions[i + 2] += velocities[i + 2];
-                            
-                            // Boundary check
-                            if (Math.abs(positions[i]) > 30) velocities[i] *= -1;
-                            if (Math.abs(positions[i + 1]) > 30) velocities[i + 1] *= -1;
-                            if (Math.abs(positions[i + 2]) > 30) velocities[i + 2] *= -1;
-                        }
-                        particlesGeometry.attributes.position.needsUpdate = true;
-                        
-                        // Rotate particles
-                        particlesMesh.rotation.x += 0.0005;
-                        particlesMesh.rotation.y += 0.001;
-                        
-                        // Rotate geometric shapes
-                        shapes.forEach((shape, index) => {
-                            shape.rotation.x += 0.003 * (index + 1);
-                            shape.rotation.y += 0.002 * (index + 1);
-                            shape.rotation.z += 0.001 * (index + 1);
-                        });
+                        // Subtle mouse interaction
+                        particlesMesh.rotation.y += mouseX * 0.0005;
+                        particlesMesh.rotation.x += mouseY * 0.0005;
                         
                         renderer.render(scene, camera);
                     }
@@ -1538,7 +1076,10 @@
             } 
             // Mobile: Lightweight particle animation
             else {
+                // Create floating particles for mobile
                 createMobileParticles();
+                
+                // Add CSS animation to mobile background
                 mobile3dBg.style.animation = 'pulse 15s ease-in-out infinite';
             }
         }
@@ -1546,14 +1087,14 @@
         // Create lightweight particles for mobile
         function createMobileParticles() {
             const container = document.getElementById('mobile3dBg');
-            const particleCount = window.innerWidth < 400 ? 25 : 40;
+            const particleCount = window.innerWidth < 400 ? 20 : 30;
             
             for(let i = 0; i < particleCount; i++) {
                 const particle = document.createElement('div');
                 particle.className = 'particle';
                 
                 // Random size
-                const size = Math.random() * 5 + 2;
+                const size = Math.random() * 4 + 2;
                 particle.style.width = `${size}px`;
                 particle.style.height = `${size}px`;
                 
@@ -1562,10 +1103,10 @@
                 particle.style.top = `${Math.random() * 100}%`;
                 
                 // Random opacity
-                particle.style.opacity = Math.random() * 0.6 + 0.2;
+                particle.style.opacity = Math.random() * 0.5 + 0.1;
                 
                 // Random animation
-                const duration = Math.random() * 15 + 10;
+                const duration = Math.random() * 20 + 10;
                 const delay = Math.random() * 5;
                 particle.style.animation = `float ${duration}s ease-in-out ${delay}s infinite`;
                 
@@ -1577,9 +1118,9 @@
             style.textContent = `
                 @keyframes float {
                     0%, 100% { transform: translate(0, 0) rotate(0deg); }
-                    25% { transform: translate(${Math.random() * 30 - 15}px, ${Math.random() * 30 - 15}px) rotate(90deg); }
-                    50% { transform: translate(${Math.random() * 40 - 20}px, ${Math.random() * 40 - 20}px) rotate(180deg); }
-                    75% { transform: translate(${Math.random() * 30 - 15}px, ${Math.random() * 30 - 15}px) rotate(270deg); }
+                    25% { transform: translate(${Math.random() * 20 - 10}px, ${Math.random() * 20 - 10}px) rotate(90deg); }
+                    50% { transform: translate(${Math.random() * 30 - 15}px, ${Math.random() * 30 - 15}px) rotate(180deg); }
+                    75% { transform: translate(${Math.random() * 20 - 10}px, ${Math.random() * 20 - 10}px) rotate(270deg); }
                 }
             `;
             document.head.appendChild(style);
@@ -1613,13 +1154,13 @@
                 const scrolled = window.pageYOffset;
                 const heroImg = document.querySelector('.img-wrapper');
                 if (heroImg) {
-                    const rate = scrolled * -0.15;
+                    const rate = scrolled * -0.1;
                     heroImg.style.transform = `perspective(1000px) rotateY(-15deg) translateY(${rate}px)`;
                 }
             });
         }
 
-        // Enhanced image hover effect for desktop
+        // Image hover effect for desktop
         if (window.innerWidth >= 768) {
             const imgWrapper = document.querySelector('.img-wrapper');
             if (imgWrapper) {
@@ -1631,61 +1172,17 @@
                     const centerX = rect.width / 2;
                     const centerY = rect.height / 2;
                     
-                    const rotateY = ((x - centerX) / centerX) * 10;
-                    const rotateX = ((centerY - y) / centerY) * 10;
+                    const rotateY = ((x - centerX) / centerX) * 5;
+                    const rotateX = ((centerY - y) / centerY) * 5;
                     
-                    imgWrapper.style.transform = `perspective(1000px) rotateY(${-15 + rotateY}deg) rotateX(${rotateX}deg) scale(1.02)`;
+                    imgWrapper.style.transform = `perspective(1000px) rotateY(${-15 + rotateY}deg) rotateX(${rotateX}deg)`;
                 });
                 
                 imgWrapper.addEventListener('mouseleave', () => {
-                    imgWrapper.style.transform = 'perspective(1000px) rotateY(-15deg) rotateX(0deg) scale(1)';
+                    imgWrapper.style.transform = 'perspective(1000px) rotateY(-15deg) rotateX(0deg)';
                 });
             }
         }
-
-        // Skill cards 3D tilt effect (desktop only)
-        if (window.innerWidth >= 768) {
-            const skillCards = document.querySelectorAll('.skill-card');
-            skillCards.forEach(card => {
-                card.addEventListener('mousemove', (e) => {
-                    const rect = card.getBoundingClientRect();
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
-                    
-                    const centerX = rect.width / 2;
-                    const centerY = rect.height / 2;
-                    
-                    const rotateY = ((x - centerX) / centerX) * 10;
-                    const rotateX = ((centerY - y) / centerY) * 10;
-                    
-                    card.style.transform = `translateY(-10px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-                });
-                
-                card.addEventListener('mouseleave', () => {
-                    card.style.transform = 'translateY(0) rotateX(0) rotateY(0)';
-                });
-            });
-        }
-
-        // Intersection Observer for scroll animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        // Observe sections
-        document.querySelectorAll('section').forEach(section => {
-            observer.observe(section);
-        });
 
         // Force Instagram embeds to reload
         window.onload = function() {
@@ -1693,7 +1190,7 @@
                 window.instgrm.Embeds.process();
             }
             
-            // Re-process Instagram embeds after a delay
+            // Re-process Instagram embeds after a delay for safety
             setTimeout(() => {
                 if (window.instgrm) {
                     window.instgrm.Embeds.process();
@@ -1706,8 +1203,10 @@
         window.addEventListener('resize', () => {
             clearTimeout(resizeTimeout);
             resizeTimeout = setTimeout(() => {
+                // Refresh AOS
                 AOS.refresh();
                 
+                // Recreate mobile particles if needed
                 if (window.innerWidth < 768) {
                     const mobileBg = document.getElementById('mobile3dBg');
                     mobileBg.innerHTML = '';
@@ -1715,29 +1214,6 @@
                 }
             }, 250);
         });
-
-        // Text typing effect for hero title
-        const heroTitle = document.getElementById('hero-title');
-        const originalText = heroTitle.innerHTML;
-        
-        function typeWriter(element, html, speed = 100) {
-            let i = 0;
-            element.innerHTML = '';
-            
-            function type() {
-                if (i < html.length) {
-                    element.innerHTML += html.charAt(i);
-                    i++;
-                    setTimeout(type, speed);
-                }
-            }
-            type();
-        }
-        
-        // Start typing effect after a delay
-        setTimeout(() => {
-            typeWriter(heroTitle, originalText, 50);
-        }, 800);
     </script>
 </body>
 </html>
