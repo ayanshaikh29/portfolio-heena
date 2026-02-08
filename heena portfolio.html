@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heenakousar Inamdar | Creative Portfolio</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #7a5438;
+            --secondary: #d4a373;
+            --dark: #2c1e14;
+            --light: #fdfaf7;
+            --glass: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --text-light: #bcaaa4;
+            --success: #7a9d54;
+        }
+
+        * {
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--dark);
+            color: var(--light);
+            overflow-x: hidden;
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+
+        /* --- Custom Cursor (Desktop only) --- */
+        #cursor {
+            width: 20px; 
+            height: 20px;
+            background: var(--secondary);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s ease;
+            mix-blend-mode: difference;
+            opacity: 0;
+        }
+
+        @media (min-width: 769px) {
+            #cursor {
+                opacity: 1;
+            }
+        }
+
+        /* --- 3D Background Canvas --- */
+        #canvas-container {
+            position: fixed;
+            top: 0; 
+            left: 0;
+            width: 100%; 
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at center, #3d2b1f 0%, #1a110a 100%);
+        }
+
+        /* --- Mobile Menu Toggle --- */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            width: 30px;
+            height: 25px;
+            justify-content: space-between;
+            z-index: 1002;
+        }
+
+        .menu-toggle span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background-color: var(--secondary);
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        .menu-toggle.active span:nth-child(1) {
+            transform: translateY(11px) rotate(45deg);
+        }
+
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-toggle.active span:nth-child(3) {
+            transform: translateY(-11px) rotate(-45deg);
+        }
+
+        /* --- Glassmorphism Navigation --- */
+        header {
+            position: fixed;
+            top: 20px; 
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 1200px;
+            padding: 15px 30px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--secondary);
+            text-decoration: none;
+            letter-spacing: 1px;
+            z-index: 1001;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+        }
+
+        nav ul { 
+            display: flex; 
+            list-style: none; 
+            gap: 30px; 
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--light);
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            transition: 0.3s;
+            opacity: 0.8;
+            font-weight: 500;
+        }
+
+        nav ul li a:hover { 
+            opacity: 1; 
+            color: var(--secondary); 
+        }
+
+        .header-btn {
+            padding: 10px 25px; 
+            font-size: 0.8rem;
+            margin-left: 20px;
+            text-decoration: none;
+        }
+
+        /* --- Hero Section --- */
+        section { 
+            padding: 120px 5%; 
+            min-height: 100vh; 
+            display: flex; 
+            align-items: center;
+            position: relative;
+        }
+
+        .hero { 
+            justify-content: space-between; 
+            flex-wrap: wrap;
+        }
+
+        .hero-content {
+            flex: 1;
+            min-width: 300px;
+            z-index: 2;
+            padding-right: 40px;
+        }
+
+        .hero-text h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, #fff, var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-text p {
+            font-size: 1.2rem; 
+            margin-bottom: 40px; 
+            max-width: 500px; 
+            color: var(--text-light);
+            line-height: 1.8;
+        }
+
+        .hero-image { 
+            flex: 1;
+            min-width: 300px;
+            display: flex; 
+            justify-content: center; 
+            position: relative;
+            z-index: 2;
+        }
+
+        .img-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 350px;
+            height: 450px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 20px 20px 50px rgba(0,0,0,0.5);
+            border: 1px solid var(--glass-border);
+        }
+
+        .img-wrapper img {
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .img-wrapper:hover img {
+            transform: scale(1.05);
+        }
+
+        /* --- Reels Showcase --- */
+        .section-title {
+            font-family: 'Playfair Display', serif; 
+            font-size: 3rem; 
+            margin-bottom: 60px; 
+            text-align: center;
+            background: linear-gradient(to right, #fff, var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .reels-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            width: 100%;
+            margin-bottom: 40px;
+        }
+
+        .reel-item {
+            background: #fff;
+            padding: 10px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            min-height: 500px;
+            transition: 0.5s;
+            overflow: hidden;
+        }
+
+        .reel-item:hover { 
+            transform: translateY(-10px); 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        /* --- Skills Grid --- */
+        .skill-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            width: 100%;
+        }
+
+        .skill-card {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 40px 30px;
+            border-radius: 24px;
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            transition: 0.5s;
+            text-align: center;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .skill-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--secondary);
+            transform: translateY(-10px);
+        }
+
+        .skill-card h3 { 
+            font-family: 'Playfair Display', serif; 
+            margin-bottom: 15px; 
+            color: var(--secondary);
+            font-size: 1.5rem;
+        }
+
+        .skill-card p {
+            color: var(--text-light);
+            line-height: 1.7;
+        }
+
+        /* --- Buttons --- */
+        .btn {
+            padding: 15px 40px;
+            background: var(--secondary);
+            color: var(--dark);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            display: inline-block;
+            transition: 0.4s;
+            border: 1px solid var(--secondary);
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: transparent;
+            color: var(--secondary);
+            box-shadow: 0 0 20px rgba(212, 163, 115, 0.3);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--secondary);
+        }
+
+        .btn-outline:hover {
+            background: var(--secondary);
+            color: var(--dark);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        /* --- Contact Section --- */
+        .contact-section {
+            text-align: center;
+            width: 100%;
+            padding: 80px 20px;
+            border-radius: 30px;
+            background: rgba(0,0,0,0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .contact-title {
+            font-family: 'Playfair Display', serif; 
+            font-size: 3rem; 
+            margin-bottom: 20px;
+            background: linear-gradient(to right, #fff, var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .contact-email {
+            font-size: 1.5rem; 
+            color: var(--secondary); 
+            margin-bottom: 40px;
+            display: block;
+        }
+
+        /* --- Footer --- */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-top: 1px solid var(--glass-border);
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .social-icons a {
+            color: var(--light);
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: var(--secondary);
+            transform: translateY(-5px);
+        }
+
+        .copyright {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        /* --- Back to Top Button --- */
+        #back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--secondary);
+            color: var(--dark);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            font-size: 1.5rem;
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        #back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        #back-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+        }
+
+        /* ==============================================
+           RESPONSIVE DESIGN
+        ============================================== */
+
+        /* Tablet Styles (768px to 1024px) */
+        @media (max-width: 1024px) {
+            .hero-text h1 { 
+                font-size: 3.5rem; 
+            }
+            
+            .section-title {
+                font-size: 2.5rem;
+            }
+            
+            .img-wrapper {
+                max-width: 320px;
+                height: 420px;
+            }
+        }
+
+        /* Mobile Landscape & Small Tablet (576px to 768px) */
+        @media (max-width: 768px) {
+            header {
+                width: 95%;
+                padding: 15px 20px;
+                top: 15px;
+            }
+            
+            .menu-toggle {
+                display: flex;
+            }
+            
+            nav ul {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                max-width: 300px;
+                height: 100vh;
+                background: rgba(44, 30, 20, 0.95);
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 40px;
+                transition: right 0.5s ease;
+                z-index: 1000;
+                border-left: 1px solid var(--glass-border);
+            }
+            
+            nav ul.active {
+                right: 0;
+            }
+            
+            .header-btn {
+                display: none;
+            }
+            
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding-top: 150px;
+            }
+            
+            .hero-content {
+                padding-right: 0;
+                margin-bottom: 60px;
+            }
+            
+            .hero-text h1 { 
+                font-size: 2.8rem; 
+            }
+            
+            .hero-text p {
+                font-size: 1.1rem;
+                margin: 0 auto 30px;
+            }
+            
+            .img-wrapper { 
+                max-width: 300px;
+                height: 380px;
+                margin: 0 auto;
+            }
+            
+            .section-title {
+                font-size: 2.2rem;
+                margin-bottom: 40px;
+            }
+            
+            .skill-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .reels-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .btn-group {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .contact-title {
+                font-size: 2.5rem;
+            }
+            
+            .contact-email {
+                font-size: 1.2rem;
+            }
+        }
+
+        /* Mobile Portrait (up to 576px) */
+        @media (max-width: 576px) {
+            .hero-text h1 { 
+                font-size: 2.3rem; 
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+                margin-bottom: 30px;
+            }
+            
+            section {
+                padding: 100px 20px 60px;
+            }
+            
+            .skill-card {
+                padding: 30px 20px;
+            }
+            
+            .contact-section {
+                padding: 60px 15px;
+            }
+            
+            .contact-title {
+                font-size: 2rem;
+            }
+            
+            .contact-email {
+                font-size: 1.1rem;
+            }
+            
+            #back-to-top {
+                bottom: 20px;
+                right: 20px;
+                width: 45px;
+                height: 45px;
+                font-size: 1.3rem;
+            }
+            
+            .img-wrapper {
+                height: 350px;
+            }
+            
+            .btn {
+                padding: 12px 30px;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Very Small Mobile (up to 375px) */
+        @media (max-width: 375px) {
+            .hero-text h1 { 
+                font-size: 2rem; 
+            }
+            
+            .logo {
+                font-size: 1.5rem;
+            }
+            
+            .img-wrapper {
+                height: 320px;
+            }
+            
+            .reel-item {
+                min-height: 450px;
+            }
+        }
+
+        /* Desktop-specific optimizations */
+        @media (min-width: 769px) {
+            .img-wrapper {
+                transform: perspective(1000px) rotateY(-10deg);
+                transition: transform 0.5s ease;
+            }
+            
+            .img-wrapper:hover {
+                transform: perspective(1000px) rotateY(-5deg) scale(1.02);
+            }
+        }
+
+        /* Accessibility improvements */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+            
+            #cursor {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="cursor"></div>
+    <div id="canvas-container"></div>
+
+    <header>
+        <a href="#" class="logo">Heena Inamdar</a>
+        
+        <div class="menu-toggle" id="menuToggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        
+        <nav>
+            <ul id="navMenu">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#work">Portfolio</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <a href="#contact" class="btn header-btn">Hire Me</a>
+        </nav>
+    </header>
+
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <div class="hero-text" data-aos="fade-up">
+                <h1 id="hero-title">Content <br>Alchemist</h1>
+                <p>
+                    I'm <strong>Heenakousar Inamdar</strong> — blending visual architecture with soul-stirring content to create digital experiences that resonate. Based in Jath, Maharashtra.
+                </p>
+                <div class="btn-group" style="justify-content: flex-start;">
+                    <a href="#work" class="btn">View Portfolio</a>
+                    <a href="#contact" class="btn btn-outline">Contact Me</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="hero-image" data-aos="zoom-in-left" data-aos-delay="300">
+            <div class="img-wrapper" id="tilt-img">
+                <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Heenakousar Inamdar - Creative Designer & Writer">
+            </div>
+        </div>
+    </section>
+
+    <section id="work" style="flex-direction: column; padding-top: 60px;">
+        <h2 class="section-title" data-aos="fade-up">Visual Gallery</h2>
+        <p style="text-align: center; margin-bottom: 50px; max-width: 700px; margin-left: auto; margin-right: auto; color: var(--text-light);" data-aos="fade-up" data-aos-delay="200">
+            A showcase of my recent Instagram reels that blend creativity with storytelling.
+        </p>
+        
+        <div class="reels-grid">
+            <div class="reel-item" data-aos="fade-up">
+                <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DRxQv4hjYLY/" data-instgrm-version="14" style="width:100%; margin:0;"></blockquote>
+            </div>
+
+            <div class="reel-item" data-aos="fade-up" data-aos-delay="100">
+                <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DUfbQKADaNI/" data-instgrm-version="14" style="width:100%; margin:0;"></blockquote>
+            </div>
+
+            <div class="reel-item" data-aos="fade-up" data-aos-delay="200">
+                <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DUSmEqqk0G3/" data-instgrm-version="14" style="width:100%; margin:0;"></blockquote>
+            </div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 30px;" data-aos="fade-up">
+            <a href="https://www.instagram.com/heenainamdar754" target="_blank" class="btn">
+                <i class="fab fa-instagram"></i> Follow @heenainamdar754
+            </a>
+        </div>
+    </section>
+
+    <section id="skills" style="flex-direction: column;">
+        <h2 class="section-title" data-aos="fade-up">My Craft</h2>
+        <p style="text-align: center; margin-bottom: 50px; max-width: 700px; margin-left: auto; margin-right: auto; color: var(--text-light);" data-aos="fade-up" data-aos-delay="200">
+            I specialize in creating compelling visual and written content that connects with audiences.
+        </p>
+        
+        <div class="skill-grid">
+            <div class="skill-card" data-aos="fade-up">
+                <h3>01. Graphic Design</h3>
+                <p>Premium social media branding and visual storytelling using Canva & Adobe Creative Suite. Creating designs that capture attention and communicate effectively.</p>
+            </div>
+            <div class="skill-card" data-aos="fade-up" data-aos-delay="100">
+                <h3>02. Content Creation</h3>
+                <p>Engaging reel strategies and script writing that captures and keeps attention. Video editing and social media content that tells your brand's story.</p>
+            </div>
+            <div class="skill-card" data-aos="fade-up" data-aos-delay="200">
+                <h3>03. Literature & Writing</h3>
+                <p>Deep Shayari and professional content writing in Hindi, Urdu, and English. Crafting words that evoke emotion and drive engagement.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="contact-section" data-aos="zoom-out">
+            <h2 class="contact-title">Get In Touch</h2>
+            <p style="margin-bottom: 30px; max-width: 600px; margin-left: auto; margin-right: auto; color: var(--text-light);">
+                Ready to transform your brand with compelling visuals and content? Let's create something amazing together.
+            </p>
+            
+            <div style="margin-bottom: 40px;">
+                <p style="margin-bottom: 10px; color: var(--text-light);">
+                    <i class="fas fa-map-marker-alt"></i> Jath, Maharashtra, India
+                </p>
+                <p style="margin-bottom: 10px; color: var(--text-light);">
+                    <i class="fas fa-phone"></i> +91 7498621020
+                </p>
+                <a href="mailto:heenainamdar066@gmail.com" class="contact-email">
+                    <i class="fas fa-envelope"></i> heenainamdar066@gmail.com
+                </a>
+            </div>
+            
+            <div class="btn-group">
+                <a href="https://www.instagram.com/heenainamdar754" target="_blank" class="btn">
+                    <i class="fab fa-instagram"></i> Instagram
+                </a>
+                <a href="mailto:heenainamdar066@gmail.com" class="btn btn-outline">
+                    <i class="fas fa-paper-plane"></i> Email Me
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="social-icons">
+            <a href="https://www.instagram.com/heenainamdar754" target="_blank" aria-label="Instagram">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="mailto:heenainamdar066@gmail.com" aria-label="Email">
+                <i class="fas fa-envelope"></i>
+            </a>
+        </div>
+        <p class="copyright">© 2023 Heenakousar Inamdar. All rights reserved.</p>
+    </footer>
+
+    <a href="#" id="back-to-top" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script async src="//www.instagram.com/embed.js"></script>
+
+    <script>
+        // Initialize AOS animations
+        AOS.init({
+            duration: 1000,
+            once: true,
+            offset: 100,
+            disable: window.innerWidth < 768 ? true : false
+        });
+
+        // Custom cursor for desktop
+        const cursor = document.getElementById('cursor');
+        if (window.innerWidth >= 768) {
+            document.addEventListener('mousemove', (e) => {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+            });
+            
+            // Cursor effects on interactive elements
+            const interactiveElements = document.querySelectorAll('a, .btn, .skill-card, .img-wrapper');
+            interactiveElements.forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    cursor.style.transform = 'scale(1.5)';
+                    cursor.style.background = '#fff';
+                });
+                el.addEventListener('mouseleave', () => {
+                    cursor.style.transform = 'scale(1)';
+                    cursor.style.background = 'var(--secondary)';
+                });
+            });
+        }
+
+        // Mobile menu toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const navMenu = document.getElementById('navMenu');
+        
+        menuToggle.addEventListener('click', function() {
+            this.classList.toggle('active');
+            navMenu.classList.toggle('active');
+            
+            // Prevent body scrolling when menu is open
+            if (navMenu.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = 'auto';
+            }
+        });
+        
+        // Close mobile menu when clicking a link
+        const navLinks = document.querySelectorAll('#navMenu a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                menuToggle.classList.remove('active');
+                navMenu.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+        });
+
+        // 3D Animated Background (Desktop only)
+        let scene, camera, renderer, torus;
+        
+        function initThreeJS() {
+            if (window.innerWidth < 768) return; // Only on desktop
+            
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            document.getElementById('canvas-container').appendChild(renderer.domElement);
+
+            // Rotating Wireframe Torus
+            const geometry = new THREE.TorusGeometry(12, 3, 16, 100);
+            const material = new THREE.MeshBasicMaterial({ 
+                color: 0x7a5438, 
+                wireframe: true,
+                transparent: true,
+                opacity: 0.3
+            });
+            torus = new THREE.Mesh(geometry, material);
+            scene.add(torus);
+
+            camera.position.z = 30;
+
+            // Add ambient light
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+            scene.add(ambientLight);
+
+            // Animation loop
+            function animate() {
+                requestAnimationFrame(animate);
+                if (torus) {
+                    torus.rotation.x += 0.003;
+                    torus.rotation.y += 0.003;
+                }
+                renderer.render(scene, camera);
+            }
+            animate();
+        }
+
+        // Initialize 3D background
+        initThreeJS();
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            // Update camera and renderer for Three.js
+            if (window.innerWidth >= 768 && camera && renderer) {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            }
+            
+            // Reinitialize AOS on resize
+            AOS.refresh();
+        });
+
+        // Back to top button
+        const backToTopBtn = document.getElementById('back-to-top');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTopBtn.classList.add('visible');
+            } else {
+                backToTopBtn.classList.remove('visible');
+            }
+        });
+        
+        backToTopBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Force Instagram embeds to reload
+        window.onload = function() {
+            if (window.instgrm) {
+                window.instgrm.Embeds.process();
+            }
+            
+            // Re-process Instagram embeds after a delay for safety
+            setTimeout(() => {
+                if (window.instgrm) {
+                    window.instgrm.Embeds.process();
+                }
+            }, 1000);
+        };
+
+        // Parallax effect on hero image (desktop only)
+        if (window.innerWidth >= 768) {
+            window.addEventListener('scroll', () => {
+                const scrolled = window.pageYOffset;
+                const heroImg = document.querySelector('.img-wrapper');
+                if (heroImg) {
+                    const rate = scrolled * -0.2;
+                    heroImg.style.transform = `perspective(1000px) rotateY(-10deg) translateY(${rate}px)`;
+                }
+            });
+        }
+    </script>
+</body>
+</html>
